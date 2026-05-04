@@ -24,7 +24,7 @@ jobs:
           script: |
             set -e
 
-            DEPLOY_DIR="$HOME/Projects/CantinhoCiclista"
+            DEPLOY_DIR="/projetos/cantinho-ciclista"
 
             echo "📂 Acessando diretório do projeto..."
             cd $DEPLOY_DIR

@@ -8,7 +8,7 @@ services:
     container_name: cantinho-ciclista
     restart: unless-stopped
     ports:
-      - "3011:80"
+      - "3015:80"
     networks:
       - cantinho-net
 
