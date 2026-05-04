@@ -11,7 +11,10 @@ services:
       - "3015:80"
     networks:
       - cantinho-net
+      - cloudflare-net
 
 networks:
   cantinho-net:
     driver: bridge
+  cloudflare-net:
+    external: true
