@@ -15,34 +15,36 @@ export default function NatureAudio() {
   // Inicializar áudio
   useEffect(() => {
     // Som de pássaros - URL do arquivo local
-    audioRef.current = new Audio("/audio/nature.mp3");
-    audioRef.current.loop = true;
-    audioRef.current.volume = 0.3;
+    const audio = new Audio("/audio/nature.mp3");
+    audio.loop = true;
+    audio.volume = 0.3;
+    audioRef.current = audio;
     
-    audioRef.current.addEventListener('canplaythrough', () => {
-      setIsReady(true);
-      // Tentar autoplay quando estiver pronto
-      audioRef.current?.play().catch(() => {
-        console.log("Autoplay bloqueado - aguardando interação");
-      });
+    // Em dispositivos móveis, canplaythrough pode não disparar até a interação.
+    // Vamos considerar pronto imediatamente para permitir o clique.
+    setIsReady(true);
+    
+    audio.addEventListener('canplaythrough', () => {
+      // Tentar autoplay quando estiver pronto (para desktop)
+      if (willAutoPlay && !isPlaying) {
+        audio.play().catch(() => {
+          console.log("Autoplay bloqueado - aguardando interação");
+        });
+      }
     });
 
     return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
+      audio.pause();
+      audioRef.current = null;
     };
   }, []);
 
   // Tentar tocar no primeiro scroll/toque/clique do usuário
   useEffect(() => {
-    if (!isReady) return;
-
     let hasStarted = false;
 
     const tryPlay = () => {
-      if (hasStarted || !audioRef.current) return;
+      if (hasStarted || !audioRef.current || isPlaying) return;
       
       audioRef.current.play().then(() => {
         hasStarted = true;
@@ -55,7 +57,7 @@ export default function NatureAudio() {
     };
 
     // Detectar interações do usuário
-    const events = ['scroll', 'touchstart', 'click', 'keydown', 'mousemove'];
+    const events = ['scroll', 'touchstart', 'click', 'keydown'];
     
     const handleInteraction = () => {
       tryPlay();
@@ -77,24 +79,23 @@ export default function NatureAudio() {
         window.removeEventListener(event, handleInteraction, { capture: true } as any);
       });
     };
-  }, [isReady]);
-
-  // Controlar play/pause
-  useEffect(() => {
-    if (!audioRef.current || !isReady) return;
-    
-    if (isPlaying && !isMuted) {
-      audioRef.current.play().catch((e) => {
-        console.log("Erro ao tocar:", e);
-        setIsPlaying(false);
-      });
-    } else {
-      audioRef.current.pause();
-    }
-  }, [isPlaying, isMuted, isReady]);
+  }, [isPlaying]);
 
   const togglePlay = () => {
-    setIsPlaying(!isPlaying);
+    if (!audioRef.current) return;
+
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      // Chamar play diretamente no evento de clique é obrigatório no iOS/Safari
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+        setWillAutoPlay(false);
+      }).catch((e) => {
+        console.log("Erro ao tocar:", e);
+      });
+    }
     setShowTooltip(false);
   };
 
