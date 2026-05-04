@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+@theme {
+  /* Cores terrosas do Cantinho */
+  --color-cream: #F5F0E6;
+  --color-cream-dark: #E8E0D0;
+  --color-wood-light: #C4A77D;
+  --color-wood: #8B6F47;
+  --color-wood-dark: #5C4033;
+  --color-forest: #2D4A3E;
+  --color-forest-dark: #1A2F28;
+  --color-sunset: #D4A574;
+  --color-sunset-gold: #E8C547;
+  --color-earth-red: #A0522D;
+  --color-charcoal: #2C2C2C;
+  
+  /* Fontes */
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-rustic: 'Courier Prime', monospace;
+}
+
+/* Modo dia (padrão) */
+:root {
+  --bg-primary: var(--color-cream);
+  --bg-secondary: var(--color-cream-dark);
+  --text-primary: var(--color-wood-dark);
+  --text-secondary: var(--color-wood);
+  --accent: var(--color-forest);
+  --accent-light: var(--color-sunset);
+}
+
+/* Modo entardecer */
+[data-theme="sunset"] {
+  --bg-primary: #3D2B1F;
+  --bg-secondary: #2A1F15;
+  --text-primary: #F5F0E6;
+  --text-secondary: #D4C4A8;
+  --accent: #E8C547;
+  --accent-light: #D4A574;
+}
+
+/* Garantir contraste adequado no tema escuro */
+[data-theme="sunset"] .text-wood-dark {
+  color: var(--color-cream) !important;
+}
+
+[data-theme="sunset"] .text-wood {
+  color: var(--color-wood-light) !important;
+}
+
+[data-theme="sunset"] .text-wood\/70,
+[data-theme="sunset"] .text-wood\/80,
+[data-theme="sunset"] .text-wood\/60 {
+  color: var(--color-cream) !important;
+  opacity: 0.8;
+}
+
+[data-theme="sunset"] .text-forest {
+  color: var(--color-sunset-gold) !important;
+}
+
+[data-theme="sunset"] .bg-cream-dark\/30,
+[data-theme="sunset"] .bg-cream-dark\/20,
+[data-theme="sunset"] .bg-cream-dark\/50 {
+  background-color: rgba(45, 35, 25, 0.5) !important;
+}
+
+[data-theme="sunset"] .border-wood\/10,
+[data-theme="sunset"] .border-wood\/30 {
+  border-color: rgba(212, 196, 168, 0.2) !important;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* Textura de madeira sutil */
+.wood-texture {
+  background-image: 
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 2px,
+      rgba(139, 111, 71, 0.03) 2px,
+      rgba(139, 111, 71, 0.03) 4px
+    );
+}
+
+/* Animações */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes draw-line {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+/* Placa de madeira */
+.wood-sign {
+  background: linear-gradient(135deg, #8B6F47 0%, #6B4E3D 50%, #5C4033 100%);
+  border: 3px solid #4A3728;
+  box-shadow: 
+    inset 0 2px 4px rgba(255,255,255,0.1),
+    0 4px 6px rgba(0,0,0,0.3),
+    0 0 0 2px #3D2B1F;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* Parallax layer */
+.parallax-layer {
+  will-change: transform;
+}
+
+/* Scrollbar estilizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--wood);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--wood-dark);
+}

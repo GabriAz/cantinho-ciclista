@@ -1,0 +1,43 @@
+name: Deploy Cantinho do Ciclista
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            set -e
+
+            DEPLOY_DIR="/projetos/cantinho-ciclista"
+
+            echo "📂 Acessando diretório do projeto..."
+            cd $DEPLOY_DIR
+
+            echo "🔄 Atualizando código..."
+            git pull origin main
+
+            echo "🐳 Rebuilding e subindo container..."
+            docker compose down
+            docker compose build --no-cache
+            docker compose up -d
+
+            echo "🧹 Limpando imagens antigas..."
+            docker image prune -f
+
+            echo "✅ Deploy concluído — cantinhodociclista.gabrielguimaraes.pro"

@@ -1,0 +1,15 @@
+# Node
+node_modules/
+npm-debug.log*
+
+# Next.js
+site/my-app/.next/
+site/my-app/dist/
+site/my-app/.env.local
+
+# Docker
+*.env
+
+# Sistema
+.DS_Store
+.kilocode/

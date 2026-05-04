@@ -1,0 +1,17 @@
+services:
+  cantinho-ciclista:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_OPENWEATHER_API_KEY: ${NEXT_PUBLIC_OPENWEATHER_API_KEY:-}
+    container_name: cantinho-ciclista
+    restart: unless-stopped
+    ports:
+      - "3011:80"
+    networks:
+      - cantinho-net
+
+networks:
+  cantinho-net:
+    driver: bridge
