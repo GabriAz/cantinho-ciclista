@@ -123,12 +123,15 @@ export default function Footer() {
                 </span>
               </div>
               
-              <motion.div 
-                className="font-display text-wood-dark text-2xl md:text-3xl inline-block transition-colors duration-500 hover:text-sunset cursor-default"
+              <motion.a 
+                href="https://gabrielguimaraes.pro"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-display text-wood-dark text-2xl md:text-3xl inline-block transition-colors duration-500 hover:text-sunset cursor-pointer"
                 whileHover={{ scale: 1.05, originX: 1 }}
               >
                 Gabriel Guimarães
-              </motion.div>
+              </motion.a>
             </motion.div>
             
           </div>
