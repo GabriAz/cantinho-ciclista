@@ -9,143 +9,74 @@ export default function Footer() {
   return (
     <footer className="py-12 px-4 md:px-8 lg:px-16 border-t border-wood/10">
       <div className="max-w-7xl mx-auto">
-        {/* Assinatura Criativa - Bicicleta Interativa */}
+        {/* Assinatura Minimalista Interativa */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial="initial"
+          whileInView="visible"
+          whileHover="hover"
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mb-12"
+          variants={{
+            initial: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
+            hover: {}
+          }}
+          className="relative mb-16 max-w-4xl mx-auto overflow-hidden rounded-2xl bg-wood/5 group cursor-default border border-wood/0 hover:border-wood/10 transition-colors duration-500"
         >
-          <div className="wood-sign rounded-2xl p-8 md:p-10 max-w-4xl mx-auto">
-            {/* Bicicleta Animada */}
-            <div className="flex flex-col md:flex-row items-center justify-center gap-8">
-              {/* Lado Esquerdo - Idealizador */}
-              <motion.div
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.3 }}
-                className="text-center md:text-right"
-              >
-                <p className="font-rustic text-amber-300/80 text-xs tracking-widest uppercase mb-1">
-                  Idealizado por
-                </p>
-                <p className="font-display text-cream text-xl md:text-2xl">
-                  Arnaldo Fagundes
-                </p>
-                <p className="font-rustic text-cream/60 text-sm mt-1">
-                  O visionário da rota
-                </p>
-              </motion.div>
+          <div className="px-8 md:px-16 py-12 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16">
+            {/* Pista Invisível que aparece no hover */}
+            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-forest/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            
+            {/* Bicicleta que passeia no hover */}
+            <motion.div
+              className="absolute bottom-0 left-0 text-forest"
+              variants={{
+                initial: { x: -50, opacity: 0 },
+                hover: { 
+                  x: [ -50, 1000 ], 
+                  opacity: [0, 1, 1, 0], 
+                  transition: { duration: 5, ease: "linear", repeat: Infinity } 
+                }
+              }}
+            >
+              <Bike size={20} className="mb-1" />
+            </motion.div>
 
-              {/* Centro - Bicicleta Interativa */}
-              <motion.div
-                className="relative"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                {/* Círculo de fundo */}
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 rounded-full border-2 border-dashed border-cream/20"
-                  style={{ width: 120, height: 120, margin: -10 }}
-                />
-                
-                {/* Container da bike */}
-                <div className="relative w-24 h-24 bg-gradient-to-br from-wood-light/20 to-wood-dark/40 rounded-full flex items-center justify-center border-2 border-sunset-gold/30">
-                  {/* Ícone da bike com animação */}
-                  <motion.div
-                    animate={{ 
-                      y: [0, -3, 0],
-                      rotate: [0, 2, -2, 0]
-                    }}
-                    transition={{ 
-                      duration: 3, 
-                      repeat: Infinity,
-                      ease: "easeInOut"
-                    }}
-                  >
-                    <Bike size={40} className="text-sunset-gold" />
-                  </motion.div>
-
-                  {/* Partículas/elementos flutuantes */}
-                  <motion.div
-                    animate={{ 
-                      y: [0, -10, 0],
-                      opacity: [0, 1, 0]
-                    }}
-                    transition={{ 
-                      duration: 2, 
-                      repeat: Infinity,
-                      delay: 0.5
-                    }}
-                    className="absolute -top-2 right-2"
-                  >
-                    <Droplets size={12} className="text-blue-400" />
-                  </motion.div>
-
-                  <motion.div
-                    animate={{ 
-                      y: [0, -8, 0],
-                      opacity: [0, 1, 0]
-                    }}
-                    transition={{ 
-                      duration: 2.5, 
-                      repeat: Infinity,
-                      delay: 1
-                    }}
-                    className="absolute -bottom-1 left-3"
-                  >
-                    <Wrench size={12} className="text-wood-light" />
-                  </motion.div>
-                </div>
-
-                {/* Texto "Pedalando juntos" */}
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.8 }}
-                  className="absolute -bottom-8 left-1/2 -translate-x-1/2 font-rustic text-cream/70 text-xs whitespace-nowrap"
-                >
-                  🚴 Pedalando juntos 🚴
-                </motion.p>
-              </motion.div>
-
-              {/* Lado Direito - Desenvolvedor */}
-              <motion.div
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5 }}
-                className="text-center md:text-left"
-              >
-                <p className="font-rustic text-amber-300/80 text-xs tracking-widest uppercase mb-1">
-                  Desenvolvido por
-                </p>
-                <p className="font-display text-cream text-xl md:text-2xl">
-                  Gabriel Guimarães
-                </p>
-                <p className="font-rustic text-cream/60 text-sm mt-1">
-                  O mago do código
-                </p>
-              </motion.div>
+            {/* Idealizadores */}
+            <div className="text-center md:text-right relative z-10 flex-1">
+              <span className="font-rustic text-[10px] tracking-[0.3em] uppercase text-wood/40 block mb-3">
+                Idealizadores
+              </span>
+              <div className="flex flex-col gap-1">
+                <span className="font-display text-wood-dark text-xl md:text-2xl transition-colors duration-300 group-hover:text-forest">
+                  Antônio Carlos Fagundes
+                </span>
+                <span className="font-display text-wood-dark text-xl md:text-2xl transition-colors duration-300 group-hover:text-forest">
+                  & Antônio Carlos
+                </span>
+              </div>
             </div>
 
-            {/* Linha decorativa com corações */}
-            <motion.div
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.7, duration: 0.8 }}
-              className="flex items-center justify-center gap-4 mt-8"
-            >
-              <div className="h-px bg-gradient-to-r from-transparent via-cream/30 to-transparent flex-1 max-w-[100px]" />
-              <Heart size={14} className="text-sunset fill-sunset animate-pulse" />
-              <div className="h-px bg-gradient-to-r from-transparent via-cream/30 to-transparent flex-1 max-w-[100px]" />
-            </motion.div>
+            {/* Divisor minimalista */}
+            <div className="w-16 h-[1px] md:w-[1px] md:h-20 bg-wood/10 relative z-10 flex items-center justify-center shrink-0">
+               <motion.div 
+                 variants={{
+                   hover: { scale: 1.2, rotate: [0, 15, -15, 0], transition: { repeat: Infinity, duration: 2 } }
+                 }}
+                 className="bg-[#faf7f2] p-2 rounded-full"
+               >
+                 <Heart size={14} className="text-sunset/40 fill-sunset/20" />
+               </motion.div>
+            </div>
+
+            {/* Desenvolvedor */}
+            <div className="text-center md:text-left relative z-10 flex-1">
+              <span className="font-rustic text-[10px] tracking-[0.3em] uppercase text-wood/40 block mb-3">
+                Desenvolvedor
+              </span>
+              <span className="font-display text-wood-dark text-xl md:text-2xl transition-colors duration-300 group-hover:text-sunset">
+                Gabriel Guimarães
+              </span>
+            </div>
           </div>
         </motion.div>
 
